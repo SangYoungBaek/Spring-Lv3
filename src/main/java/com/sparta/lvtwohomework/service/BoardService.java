@@ -46,7 +46,6 @@ public class BoardService {
         }
 
         return boardCommentResponseDtoList;
-        // return boardRepository.findAllByOrderBySaveDateDesc().stream().map(BoardResponseDto::new).toList();
     }
 
     public BoardCommentResponseDto selectGetBoard(Long id) {
