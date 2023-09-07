@@ -14,7 +14,7 @@ public class UserRequestDto {
     private String username;
 
     @Size(min=8, max=15, message = "패스워드가 비정상적입니다.")
-    @Pattern(regexp = "(^[0-9a-zA-Z]*$)",  message = "ID 형식이 올바르지않습니다.")
+    @Pattern(regexp = "(^[0-9a-zA-Z]+[`~!@#$%^&*()-_=+\\\\|{};:'\\\",.<>/?]+$)",  message = "ID 형식이 올바르지않습니다.")
     private String password;
 
     private boolean admin = false;
