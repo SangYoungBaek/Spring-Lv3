@@ -2,7 +2,6 @@ package com.sparta.lvtwohomework.controller;
 
 import com.sparta.lvtwohomework.dto.CommentRequestDto;
 import com.sparta.lvtwohomework.dto.CommentResponseDto;
-import com.sparta.lvtwohomework.entity.Board;
 import com.sparta.lvtwohomework.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
