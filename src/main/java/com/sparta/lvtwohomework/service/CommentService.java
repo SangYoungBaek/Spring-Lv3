@@ -2,6 +2,7 @@ package com.sparta.lvtwohomework.service;
 
 import com.sparta.lvtwohomework.dto.CommentRequestDto;
 import com.sparta.lvtwohomework.dto.CommentResponseDto;
+import com.sparta.lvtwohomework.dto.StatusResponseDto;
 import com.sparta.lvtwohomework.entity.Board;
 import com.sparta.lvtwohomework.entity.Comment;
 import com.sparta.lvtwohomework.entity.User;
@@ -9,6 +10,7 @@ import com.sparta.lvtwohomework.repository.BoardRepository;
 import com.sparta.lvtwohomework.repository.CommentRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,33 +32,31 @@ public class CommentService {
         return new CommentResponseDto(saveComment);
     }
 
-    public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest req) {
+    public StatusResponseDto updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("댓글이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다."));
 
-        if(comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")){
+        if (comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
             comment.update(requestDto);
+            return new StatusResponseDto(String.valueOf(HttpStatus.OK), "댓글 업데이트 성공");
         } else {
-            throw new IllegalArgumentException("댓글수정권한이 없습니다.");
+            return new StatusResponseDto(String.valueOf(HttpStatus.FORBIDDEN), "작성자만 수정할 수 있습니다.");
         }
-
-        return new CommentResponseDto(comment);
     }
 
-    public String deleteComment(Long id, HttpServletRequest req) {
+    public StatusResponseDto deleteComment(Long id, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("댓글이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다."));
 
-        if(comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")){
+        if (comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
             commentRepository.delete(comment);
+            return new StatusResponseDto(String.valueOf(HttpStatus.OK), id + "번 댓글 삭제에 성공했습니다.");
         } else {
-            throw new IllegalArgumentException("댓글삭제권한이 없습니다.");
+            return new StatusResponseDto(String.valueOf(HttpStatus.FORBIDDEN), "작성자만 삭제할 수 있습니다.");
         }
-
-        return id + "번 댓글 삭제에 성공했습니다.";
     }
 }

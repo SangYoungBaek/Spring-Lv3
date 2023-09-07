@@ -1,6 +1,6 @@
 package com.sparta.lvtwohomework.controller;
 
-import com.sparta.lvtwohomework.dto.SingupResponseDto;
+import com.sparta.lvtwohomework.dto.StatusResponseDto;
 import com.sparta.lvtwohomework.dto.UserRequestDto;
 import com.sparta.lvtwohomework.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<SingupResponseDto> signup(@RequestBody @Valid UserRequestDto requestDto, BindingResult bindingResult) {
-        SingupResponseDto result = new SingupResponseDto();
+    public ResponseEntity<StatusResponseDto> signup(@RequestBody @Valid UserRequestDto requestDto, BindingResult bindingResult) {
+        StatusResponseDto result = new StatusResponseDto();
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if(fieldErrors.size() > 0) {
@@ -47,8 +47,8 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<SingupResponseDto> login(@RequestBody UserRequestDto requestDto, HttpServletResponse res) {
-        SingupResponseDto result = new SingupResponseDto();
+    public ResponseEntity<StatusResponseDto> login(@RequestBody UserRequestDto requestDto, HttpServletResponse res) {
+        StatusResponseDto result = new StatusResponseDto();
 
         try {
              result = userService.login(requestDto, res);

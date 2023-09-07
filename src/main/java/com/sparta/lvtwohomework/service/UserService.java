@@ -1,6 +1,6 @@
 package com.sparta.lvtwohomework.service;
 
-import com.sparta.lvtwohomework.dto.SingupResponseDto;
+import com.sparta.lvtwohomework.dto.StatusResponseDto;
 import com.sparta.lvtwohomework.dto.UserRequestDto;
 import com.sparta.lvtwohomework.entity.User;
 import com.sparta.lvtwohomework.entity.UserRoleEnum;
@@ -8,7 +8,6 @@ import com.sparta.lvtwohomework.jwt.JwtUtil;
 import com.sparta.lvtwohomework.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class UserService {
 
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public SingupResponseDto signup(UserRequestDto userRequestDto) {
+    public StatusResponseDto signup(UserRequestDto userRequestDto) {
         String username = userRequestDto.getUsername();
         String password = passwordEncoder.encode(userRequestDto.getPassword());
 
@@ -50,14 +49,14 @@ public class UserService {
 
         User user = new User(username, password, role);
         userRepository.save(user);
-        SingupResponseDto singupResponseDto = new SingupResponseDto();
-        singupResponseDto.setStatus(String.valueOf(HttpStatus.OK));
-        singupResponseDto.setMsg("회원가입 성공");
-        return singupResponseDto;
+        StatusResponseDto statusResponseDto = new StatusResponseDto();
+        statusResponseDto.setStatus(String.valueOf(HttpStatus.OK));
+        statusResponseDto.setMsg("회원가입 성공");
+        return statusResponseDto;
     }
 
 
-    public SingupResponseDto login(UserRequestDto requestDto, HttpServletResponse res) {
+    public StatusResponseDto login(UserRequestDto requestDto, HttpServletResponse res) {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
 
@@ -74,9 +73,9 @@ public class UserService {
         // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
         String token = jwtUtil.createToken(user.getUsername(), user.getRole());
         jwtUtil.addJwtToCookie(token, res);
-        SingupResponseDto singupResponseDto = new SingupResponseDto();
-        singupResponseDto.setStatus(String.valueOf(HttpStatus.OK));
-        singupResponseDto.setMsg("로그인 성공");
-        return singupResponseDto;
+        StatusResponseDto statusResponseDto = new StatusResponseDto();
+        statusResponseDto.setStatus(String.valueOf(HttpStatus.OK));
+        statusResponseDto.setMsg("로그인 성공");
+        return statusResponseDto;
     }
 }
