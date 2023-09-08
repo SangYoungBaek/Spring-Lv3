@@ -6,6 +6,7 @@ import com.sparta.lvtwohomework.dto.StatusResponseDto;
 import com.sparta.lvtwohomework.entity.Board;
 import com.sparta.lvtwohomework.entity.Comment;
 import com.sparta.lvtwohomework.entity.User;
+import com.sparta.lvtwohomework.entity.UserRoleEnum;
 import com.sparta.lvtwohomework.repository.BoardRepository;
 import com.sparta.lvtwohomework.repository.CommentRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class CommentService {
+
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+
     public CommentResponseDto createComment(CommentRequestDto requestDto, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 
@@ -32,13 +35,20 @@ public class CommentService {
         return new CommentResponseDto(saveComment);
     }
 
+    public CommentResponseDto selectGetComment(Long id) {
+        Comment result = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글 입니다"));
+        return new CommentResponseDto(result);
+    }
+
+
     public StatusResponseDto updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다."));
 
-        if (comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
+        if (comment.getUsername().equals(user.getUsername()) || user.getRole() == UserRoleEnum.ADMIN) {
             comment.update(requestDto);
             return new StatusResponseDto(String.valueOf(HttpStatus.OK), "댓글 업데이트 성공");
         } else {
@@ -52,11 +62,13 @@ public class CommentService {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다."));
 
-        if (comment.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
+        if (comment.getUsername().equals(user.getUsername()) || user.getRole() == UserRoleEnum.ADMIN) {
             commentRepository.delete(comment);
             return new StatusResponseDto(String.valueOf(HttpStatus.OK), id + "번 댓글 삭제에 성공했습니다.");
         } else {
             return new StatusResponseDto(String.valueOf(HttpStatus.FORBIDDEN), "작성자만 삭제할 수 있습니다.");
         }
     }
+
+
 }

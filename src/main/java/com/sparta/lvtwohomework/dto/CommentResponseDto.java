@@ -3,7 +3,6 @@ package com.sparta.lvtwohomework.dto;
 import com.sparta.lvtwohomework.entity.Comment;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,8 +10,8 @@ public class CommentResponseDto {
     private Long id;
     private String contents;
     private String username;
-    private LocalDate saveDate;
-    private LocalDate modifiedAt;
+    private LocalDateTime saveDate;
+    private LocalDateTime modifiedAt;
 
     public CommentResponseDto(Comment saveComment) {
         this.id = saveComment.getId();

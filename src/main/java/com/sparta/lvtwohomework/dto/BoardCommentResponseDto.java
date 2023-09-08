@@ -1,10 +1,9 @@
 package com.sparta.lvtwohomework.dto;
 
 import com.sparta.lvtwohomework.entity.Board;
-import com.sparta.lvtwohomework.entity.Comment;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,8 +13,8 @@ public class BoardCommentResponseDto {
     private String title;
     private String username;
     private String contents;
-    private LocalDate saveDate;
-    private LocalDate modifiedAt;
+    private LocalDateTime saveDate;
+    private LocalDateTime modifiedAt;
     private List<CommentResponseDto> commentResponseDtoList;
 
 

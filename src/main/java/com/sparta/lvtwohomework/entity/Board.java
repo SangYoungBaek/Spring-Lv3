@@ -10,14 +10,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-글번호 - no
-제목 - title
-작성자ID - id
-작성내용 - contents
-작성날짜 - save_date
-비밀번호 - con_pw
- */
 @Entity
 @Getter
 @Setter

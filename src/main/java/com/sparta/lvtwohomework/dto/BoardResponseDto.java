@@ -3,7 +3,7 @@ package com.sparta.lvtwohomework.dto;
 import com.sparta.lvtwohomework.entity.Board;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class BoardResponseDto {
@@ -11,8 +11,8 @@ public class BoardResponseDto {
     private String username;
     private String title;
     private String contents;
-    private LocalDate saveDate;
-    private LocalDate modifiedAt;
+    private LocalDateTime saveDate;
+    private LocalDateTime modifiedAt;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();

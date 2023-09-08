@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findAllByOrderBySaveDateDesc();
-    List<Board> findByIdAndUsername(Long id, String username);
 
     Optional<Board> findByUsernameAndId(String username, Long id);
-    //Optional<Board> findByIdAndConPwEquals(Long id, String conPw);
 }

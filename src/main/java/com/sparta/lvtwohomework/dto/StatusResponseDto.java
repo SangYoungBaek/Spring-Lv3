@@ -1,7 +1,6 @@
 package com.sparta.lvtwohomework.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class StatusResponseDto {

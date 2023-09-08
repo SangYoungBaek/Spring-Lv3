@@ -3,10 +3,9 @@ package com.sparta.lvtwohomework.service;
 import com.sparta.lvtwohomework.dto.*;
 import com.sparta.lvtwohomework.entity.Board;
 import com.sparta.lvtwohomework.entity.User;
-import com.sparta.lvtwohomework.jwt.JwtUtil;
+import com.sparta.lvtwohomework.entity.UserRoleEnum;
 import com.sparta.lvtwohomework.repository.BoardRepository;
 import com.sparta.lvtwohomework.repository.CommentRepository;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,9 +58,10 @@ public class BoardService {
         User user = (User) req.getAttribute("user");
 
 
-        Board board = boardRepository.findByUsernameAndId(user.getUsername(), id)
+//        Board board = boardRepository.findByUsernameAndId(user.getUsername(), id)
+        Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 존재하지 않습니다."));
-        if (board.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
+        if (board.getUsername().equals(user.getUsername()) || user.getRole() == UserRoleEnum.ADMIN) {
             board.update(requestDto);
             return new StatusResponseDto(String.valueOf(HttpStatus.OK), "게시글 업데이트 성공");
         } else {
@@ -72,9 +72,9 @@ public class BoardService {
     public StatusResponseDto deleteBoard(Long id, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 
-        Board board = boardRepository.findByUsernameAndId(user.getUsername(), id)
+        Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
-        if (board.getUsername().equals(user.getUsername()) || user.getRole().equals("ADMIN")) {
+        if (board.getUsername().equals(user.getUsername()) || user.getRole() == UserRoleEnum.ADMIN) {
             boardRepository.delete(board);
             return new StatusResponseDto(String.valueOf(HttpStatus.OK), id + "번 게시물 삭제에 성공했습니다.");
         } else {
