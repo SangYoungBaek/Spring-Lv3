@@ -11,4 +11,5 @@ public class StatusResponseDto {
         this.status = status;
         this.msg = msg;
     }
+
 }

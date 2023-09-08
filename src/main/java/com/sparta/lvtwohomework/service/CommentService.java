@@ -35,13 +35,6 @@ public class CommentService {
         return new CommentResponseDto(saveComment);
     }
 
-    public CommentResponseDto selectGetComment(Long id) {
-        Comment result = commentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글 입니다"));
-        return new CommentResponseDto(result);
-    }
-
-
     public StatusResponseDto updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest req) {
         User user = (User) req.getAttribute("user");
 

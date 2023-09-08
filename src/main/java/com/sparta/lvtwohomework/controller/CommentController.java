@@ -21,11 +21,6 @@ public class CommentController {
         return commentService.createComment(requestDto, req);
     }
 
-    @GetMapping("/comments/{id}")
-    public CommentResponseDto selectGetComment(@PathVariable Long id)  {
-        return commentService.selectGetComment(id);
-    }
-
     @PutMapping("/comments/{id}")
     public StatusResponseDto updateComment(@PathVariable Long id,
                                            @RequestBody CommentRequestDto requestDto,

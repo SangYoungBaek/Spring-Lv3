@@ -1,11 +1,10 @@
 package com.sparta.lvtwohomework.entity;
 
 public enum UserRoleEnum {
-    USER(Authority.USER),  // 사용자 권한
-    ADMIN(Authority.ADMIN);  // 관리자 권한
+    USER(Authority.USER),
+    ADMIN(Authority.ADMIN);
 
     private final String authority;
-    //Authority 값은 생성자에서 넣는다
     UserRoleEnum(String authority) {
         this.authority = authority;
     }
